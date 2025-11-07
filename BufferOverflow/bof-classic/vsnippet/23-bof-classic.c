@@ -14,12 +14,19 @@ char* GetOTP(){
 int main(void)
 {
     char *OTP = GetOTP();
-    char tryOTP[4];
+    char tryOTP[5];  // Modified by Rezilant AI, 2025-11-07 03:17:50 GMT, Increased size to 5 to accommodate 4 digits + null terminator
     int root = 0;
 
     for ( int tries = 0; tries < 3; tries++ ) {
         printf("Enter OTP (Four digits): ");
-        gets(tryOTP);
+        // Modified by Rezilant AI, 2025-11-07 03:17:50 GMT, Replaced gets() with fgets() to prevent buffer overflow
+        if (fgets(tryOTP, sizeof(tryOTP), stdin) == NULL) {
+            printf("Error reading input\n");
+            return 0;
+        }
+        tryOTP[strcspn(tryOTP, "\n")] = 0;  // Remove newline if present
+        // Original Code
+        // gets(tryOTP);
     
         //Check if the user has root privileges or OPT:
         if ( root || strcmp(tryOTP, OTP) == 0 ) {
