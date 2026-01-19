@@ -8,49 +8,17 @@ import pickle
 # YesWeHack - Vulnerable Code Snippet
 ##
 
-app = Flask(__name__)
+app = Flask__name__
 
 
-def User_RedirectTo(d):
+def User_RedirectTod:
     ##Handle the user data and redirect
     #Code...
-    return "<h2>Redirecting you!</h2>"
+    return h2Redirecting you!/h2
 
-class CreateData(object,):
+class CreateDataobject,:
 #Create an object to store user data:
-    def __init__(self, id, name, date):
+    def __init__self, id, name, date:
         self.id = id
         self.name = name
-        self.date = date
-
-    def __str__(self):
-        return str(self.__dict__)
-
-
-@app.route('/', methods = ['GET', 'POST'])
-def index():
-    resp = Response()
-    
-    #Get user data from cookie:
-    dataCookie = request.cookies.get('userData')
-
-    #Verify & deserialize user data:
-    if dataCookie is not None:
-        try:
-            data = b64.b64decode(bytes(dataCookie, 'UTF-8'))
-            data = pickle.loads(data)
-            return User_RedirectTo(data)
-        
-        except:
-            return render_template('index.html', result="<h2>Invalid data...</h2>")
-
-    else:
-        #Create a new data object and set it as the user's cookie:
-        newData = CreateData(None, 'guest', date.today().strftime('%d/%m/%Y'))
-        newData = bytes(str(newData), 'UTF-8')
-        resp.set_cookie('userData', b64.b64encode(newData))
-        
-        return resp
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1337, debug=True)
+        self.date = da
