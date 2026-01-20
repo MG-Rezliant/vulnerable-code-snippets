@@ -2,7 +2,7 @@
 FROM php:8.2-apache
 
 #Install and update system dependencies
-RUN apt update -y; apt install -y supervisor apache2
+RUN apt update -y apt install -y supervisor apache2
 WORKDIR /var/www/html/
 
 #Prepare and setup the working directory
@@ -18,4 +18,4 @@ COPY config/apache.conf /etc/apache2/sites-enabled/apache.conf
 
 EXPOSE 1337
 
-ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
+# Modified by Rezilant AI, 2026-01-20 12:53:35 GMT, Added non-ro
