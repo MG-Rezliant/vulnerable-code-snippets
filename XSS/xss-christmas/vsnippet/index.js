@@ -9,6 +9,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/ignore', express.static(path.join(__dirname, 'ignore')));
 
+// Modified by Rezilant AI, 2026-03-02 17:26:26 GMT, Added escapeHtml function to sanitize user input and prevent XSS attacks
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 app.get('/', (req, res) => {
   res.send(`
@@ -42,7 +51,10 @@ function safeXSSMASLetter(content) {
   
 app.post('/send-letter', (req, res) =>{
   let childName = escapeHTML(req.body.childName);
-  let letterContent = req.body.letterContent; // Custom sanitize – hope it holds!
+  // Modified by Rezilant AI, 2026-03-02 17:26:26 GMT, Apply escapeHtml to letterContent to prevent XSS injection
+  let letterContent = escapeHtml(req.body.letterContent);
+  // Original Code
+  // let letterContent = req.body.letterContent; // Custom sanitize – hope it holds!
 
   if (!safeXSSMASLetter(letterContent)) {
     return renderErrorPage(res); 
@@ -60,7 +72,7 @@ app.post('/send-letter', (req, res) =>{
       <div class="container">
         <h1>Dear ${childName} 🎄,</h1>
         <p>Your letter has been sent to Santa Claus successfully!</p>
-        <p>Here’s what you wrote:</p>
+        <p>Here's what you wrote:</p>
         <p><strong>${letterContent}</strong></p>
         <a href="/" class="button">Send another letter</a>
       </div>
