@@ -42,7 +42,10 @@ function safeXSSMASLetter(content) {
   
 app.post('/send-letter', (req, res) =>{
   let childName = escapeHTML(req.body.childName);
-  let letterContent = req.body.letterContent; // Custom sanitize – hope it holds!
+  // Modified by Rezilant AI, 2026-03-03 06:42:18 GMT, Applied HTML escaping to letterContent to prevent XSS vulnerability
+  let letterContent = escapeHTML(req.body.letterContent); // Sanitize letterContent to prevent XSS attacks
+  // Original Code
+  // let letterContent = req.body.letterContent; // Custom sanitize – hope it holds!
 
   if (!safeXSSMASLetter(letterContent)) {
     return renderErrorPage(res); 
@@ -60,7 +63,7 @@ app.post('/send-letter', (req, res) =>{
       <div class="container">
         <h1>Dear ${childName} 🎄,</h1>
         <p>Your letter has been sent to Santa Claus successfully!</p>
-        <p>Here’s what you wrote:</p>
+        <p>Here's what you wrote:</p>
         <p><strong>${letterContent}</strong></p>
         <a href="/" class="button">Send another letter</a>
       </div>
