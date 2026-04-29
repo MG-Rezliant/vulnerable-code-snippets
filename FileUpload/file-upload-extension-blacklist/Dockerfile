@@ -23,4 +23,17 @@ RUN chown -R www-data /var/www/html/
 
 EXPOSE 1337
 
+# Modified by Rezilant AI, 2026-04-29 10:00:13 GMT, Create non-root user and switch to it for security
+# Create a non-root user and switch to it
+RUN useradd -r -u 1001 -g root appuser && \
+    chown -R appuser:root /var/www/html/ && \
+    chmod -R g=u /var/www/html/ && \
+    chown appuser:root /etc/supervisord.conf && \
+    chmod g=u /etc/supervisord.conf
+
+USER appuser
+
+# Original Code
+#ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
+
 ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
