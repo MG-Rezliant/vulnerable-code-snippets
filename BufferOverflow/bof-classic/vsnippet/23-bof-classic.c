@@ -19,7 +19,11 @@ int main(void)
 
     for ( int tries = 0; tries < 3; tries++ ) {
         printf("Enter OTP (Four digits): ");
-        gets(tryOTP);
+        // Modified by Rezilant AI, 2025-11-11 09:53:38 GMT, Replace gets() with fgets() to prevent buffer overflow
+        fgets(tryOTP, sizeof(tryOTP), stdin);
+        tryOTP[strcspn(tryOTP, "\n")] = 0;
+        // Original Code
+        // gets(tryOTP);
     
         //Check if the user has root privileges or OPT:
         if ( root || strcmp(tryOTP, OTP) == 0 ) {
