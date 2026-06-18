@@ -30,5 +30,12 @@ def index():
 
 #Start the vulnerable server:
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1337, debug=True)
-
+    # Modified by Rezilant AI, 2026-06-18 23:37:22 GMT, Bind Flask to localhost only to prevent direct internet exposure and use production-grade WSGI server for production deployments
+    # Development - restrict to localhost
+    app.run(host='127.0.0.1', port=1337, debug=True)
+    
+    # Production - use a proper WSGI server instead
+    # gunicorn --bind 127.0.0.1:1337 --workers 4 app:app
+    
+    # Original Code
+    # app.run(host='0.0.0.0', port=1337, debug=True)
