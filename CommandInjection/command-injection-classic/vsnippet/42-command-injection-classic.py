@@ -35,4 +35,8 @@ def health():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1337, debug=True)
+    # Modified by Rezilant AI, 2026-06-18 23:36:07 GMT, Changed host binding from 0.0.0.0 to 127.0.0.1 and disabled debug mode to prevent external access and sensitive information exposure
+    # For development only - bind to localhost and disable debug mode
+    app.run(host='127.0.0.1', port=1337, debug=False)
+    # Original Code
+    # app.run(host='0.0.0.0', port=1337, debug=True)
