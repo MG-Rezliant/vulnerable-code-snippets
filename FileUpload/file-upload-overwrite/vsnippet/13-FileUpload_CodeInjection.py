@@ -38,4 +38,11 @@ def index():
 
 #Start the server:
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1337, debug=True)
+    # Modified by Rezilant AI, 2026-06-18 23:36:25 GMT, Restrict Flask to localhost only and disable debug mode in production to prevent direct internet exposure
+    # Development - bind to localhost only
+    app.run(host='127.0.0.1', port=1337, debug=True)
+    # Production - use a WSGI server instead
+    # gunicorn --bind 127.0.0.1:1337 --workers 4 your_app:app
+    
+    # Original Code
+    #app.run(host='0.0.0.0', port=1337, debug=True)
