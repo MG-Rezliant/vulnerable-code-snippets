@@ -32,7 +32,10 @@ if ( $result->num_rows > 0 ) {
       "Color: " .$row["color"] . "\n";
     }
 } else {
-  echo "0 results for $query";
+  // Modified by Rezilant AI, 2026-06-18 23:34:02 GMT, Sanitize user input to prevent XSS attacks by encoding special characters
+  echo "0 results for " . htmlentities($query, ENT_QUOTES, 'UTF-8');
+  // Original Code
+  // echo "0 results for $query";
 }
 
 $mysqlDB->close();
