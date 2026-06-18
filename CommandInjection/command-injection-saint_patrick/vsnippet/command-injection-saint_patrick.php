@@ -66,7 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['item'])) {
                 <div class="result-box">
                     <pre>
 > Processing order...
-> <?php echo $order_result; ?>
+> <?php 
+// Modified by Rezilant AI, 2026-06-18 23:33:47 GMT, Applied XSS protection using htmlspecialchars with ENT_QUOTES and UTF-8 encoding
+echo htmlspecialchars($order_result, ENT_QUOTES, 'UTF-8'); 
+// Original Code
+// echo $order_result; 
+?>
                     </pre>
                 </div>
             <?php endif; ?>
