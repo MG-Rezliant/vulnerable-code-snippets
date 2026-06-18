@@ -53,4 +53,7 @@ def index():
         return resp
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1337, debug=True)
+    # Modified by Rezilant AI, 2026-06-18 23:36:13 GMT, Restricts Flask to localhost and disables debug mode to prevent external network exposure and information leakage
+    app.run(host='127.0.0.1', port=1337, debug=False)
+    # Original Code
+    #app.run(host='0.0.0.0', port=1337, debug=True)
