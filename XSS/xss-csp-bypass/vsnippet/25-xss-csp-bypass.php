@@ -24,7 +24,11 @@ $design = Design(__FILE__, $title);
 <body>
 <h1><?= $title ?></h1>
 
-<p><?= ( isset($_GET["message"]) ) ? $_GET["message"] : 'session expired' ?></p>
+<!-- Modified by Rezilant AI, 2026-06-18 23:34:08 GMT, Sanitized user input to prevent XSS by encoding special characters -->
+<p><?= isset($_GET["message"]) ? htmlentities($_GET["message"], ENT_QUOTES, 'UTF-8') : 'session expired' ?></p>
+
+<!-- Original Code -->
+<!-- <p><?= ( isset($_GET["message"]) ) ? $_GET["message"] : 'session expired' ?></p> -->
 
 <input type="hidden" id="host" value="<?= $_SERVER['HTTP_HOST'] ?>">
 
