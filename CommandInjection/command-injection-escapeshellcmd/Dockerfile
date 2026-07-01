@@ -22,4 +22,13 @@ RUN chown -R www-data /var/www/html/
 
 EXPOSE 1337
 
+# Modified by Rezilant AI, 2026-07-01 09:05:23 GMT, Added non-root user to follow principle of least privilege
+# Create a non-root user and switch to it
+RUN useradd -r -u 1001 -g root appuser && \
+    chown -R appuser:root /var/log/supervisor /var/run
+
+USER appuser
+
+# Original Code
+# ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
 ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
