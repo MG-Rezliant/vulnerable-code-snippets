@@ -14,7 +14,16 @@ if ( isset($_POST['markdown']) && isset($_POST['convert']) ) {
     $convert = ( strlen($_POST['convert']) > 0 ) ? $_POST['convert'] : 'html';
 
     file_put_contents('markdown.md', $_POST['markdown']);
-    echo shell_exec("pandoc markdown.md -t ". escapeshellcmd($convert) ." -o ./files/converted");
+    // Modified by Rezilant AI, 2026-07-01 09:05:28 GMT, Added input validation and output sanitization to prevent XSS and command injection
+    $allowed_formats = ['html', 'pdf', 'docx'];
+    if (in_array($convert, $allowed_formats, true)) {
+        $output = shell_exec("pandoc markdown.md -t " . escapeshellarg($convert) . " -o ./files/converted");
+        echo htmlentities($output, ENT_QUOTES, 'UTF-8');
+    } else {
+        echo "Invalid format specified.";
+    }
+    // Original Code
+    // echo shell_exec("pandoc markdown.md -t ". escapeshellcmd($convert) ." -o ./files/converted");
     unlink('markdown.md');
 }
 ?>
@@ -51,6 +60,3 @@ if ( isset($_POST['markdown']) && isset($_POST['convert']) ) {
 </style>
 <body>
 </html>
-
-
-
