@@ -69,7 +69,10 @@
         
         var testTodoClass = new todoClass(); // TODO: ...
         
-        var test = new SessionManager("<?= preg_replace('/[<>]/', '', $_REQUEST['todo-username']); ?>");
+        // Modified by Rezilant AI, 2026-08-31 06:59:20 GMT, Fixed XSS vulnerability by replacing preg_replace with htmlentities for proper output encoding
+        var test = new SessionManager("<?= htmlentities($_REQUEST['todo-username'], ENT_QUOTES, 'UTF-8'); ?>");
+        // Original Code
+        // var test = new SessionManager("<?= preg_replace('/[<>]/', '', $_REQUEST['todo-username']); ?>");
         test.startSession();
     </script>
 
