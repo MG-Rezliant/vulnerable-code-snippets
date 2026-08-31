@@ -26,19 +26,16 @@ $result = $mysqlDB->query("SELECT * FROM `products` WHERE category = '$query'");
 // In case we got any data back from our database, output it:
 if ( $result->num_rows > 0 ) {
     while($row = $result->fetch_assoc()) {
-      // Modified by Rezilant AI, 2026-08-31 06:59:06 GMT, Wrap echoed output with htmlentities() to prevent XSS attacks from database content
-      echo "Id: " . htmlentities($row["id"], ENT_QUOTES, 'UTF-8') . "\n",
-           "Stock: " . htmlentities($row["stock"], ENT_QUOTES, 'UTF-8') . "\n",
-           "Category: " . htmlentities($row["category"], ENT_QUOTES, 'UTF-8') . "\n",
-           "Color: " . htmlentities($row["color"], ENT_QUOTES, 'UTF-8') . "\n";
-      // Original Code
-      // echo "Id: " . $row["id"] . "\n",
-      // "Stock: " . $row["stock"] . "\n",
-      // "Category: " .$row["category"] . "\n",
-      // "Color: " .$row["color"] . "\n";
+      echo "Id: " . $row["id"] . "\n",
+      "Stock: " . $row["stock"] . "\n",
+      "Category: " .$row["category"] . "\n",
+      "Color: " .$row["color"] . "\n";
     }
 } else {
-  echo "0 results for $query";
+  // Modified by Rezilant AI, 2026-08-31 06:59:59 GMT, sanitize output to prevent XSS by encoding special characters
+  echo "0 results for " . htmlentities($query, ENT_QUOTES, 'UTF-8');
+  // Original Code
+  // echo "0 results for $query";
 }
 
 $mysqlDB->close();
