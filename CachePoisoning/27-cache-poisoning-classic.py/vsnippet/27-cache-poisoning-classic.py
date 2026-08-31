@@ -29,5 +29,11 @@ def index():
     
     return render_template('index.html', result=HTMLContent)
 
+# Modified by Rezilant AI, 2026-08-31 07:00:13 GMT, Changed to bind to localhost only and disabled debug mode for production security
+# Development only - bind to localhost to prevent public exposure and disable debug mode
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1337, debug=True)
+    app.run(host='127.0.0.1', port=1337, debug=False)
+
+# Original Code
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=1337, debug=True)
