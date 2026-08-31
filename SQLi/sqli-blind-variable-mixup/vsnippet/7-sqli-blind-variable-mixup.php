@@ -26,7 +26,14 @@ if ( isset($_GET["id"]) && isset($_GET["stock"]) && isset($_GET["color"]) ) {
         $color => $mysqlDB->real_escape_string($color)
     );
 
-    $result = mysqli_query($mysqlDB, "SELECT * FROM `products` WHERE color = '$color' AND (id > $id AND stock > $stock)");
+    // Modified by Rezilant AI, 2026-08-31 06:54:19 GMT, Replaced manual SQL construction with prepared statement to prevent SQL injection
+    $stmt = $mysqlDB->prepare("SELECT * FROM `products` WHERE color = ? AND (id > ? AND stock > ?)");
+    $stmt->bind_param("sii", $color, $id, $stock);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Original Code
+    // $result = mysqli_query($mysqlDB, "SELECT * FROM `products` WHERE color = '$color' AND (id > $id AND stock > $stock)");
 
     if ( $result->num_rows > 0) {
         $verbose = htmlentities($result->num_rows . ' exist with color: ' . $color);
