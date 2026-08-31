@@ -35,7 +35,10 @@ function InviteLink($from, $to) {
 echo "<h2>Generate a invite link\n</h2>";
 
 if ( isset($_GET['from']) || isset($_GET['to']) ) {
-    echo "Your link: ", InviteLink($_GET['from'], $_GET['to']);
+    // Modified by Rezilant AI, 2026-08-31 06:58:24 GMT, Sanitized output using htmlentities to prevent XSS injection
+    echo "Your link: ", htmlentities(InviteLink($_GET['from'], $_GET['to']), ENT_QUOTES, 'UTF-8');
+    // Original Code
+    // echo "Your link: ", InviteLink($_GET['from'], $_GET['to']);
 }
 
 ?>
