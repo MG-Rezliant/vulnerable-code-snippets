@@ -6,6 +6,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -58,5 +59,12 @@ func run() {
 	port := 1337
 	addr := fmt.Sprintf("0.0.0.0:%d", port)
 	fmt.Printf("Server listening on : http://%s\n", addr)
-	http.ListenAndServe(addr, nil)
+	// Modified by Rezilant AI, 2026-08-31 07:00:06 GMT, Enable TLS encryption to prevent plaintext transmission and address OWASP A04:2025 Cryptographic Failures
+	certFile := "server.crt"
+	keyFile := "server.key"
+	if err := http.ListenAndServeTLS(addr, certFile, keyFile, nil); err != nil {
+		log.Fatal(err)
+	}
+	// Original Code
+	// http.ListenAndServe(addr, nil)
 }
