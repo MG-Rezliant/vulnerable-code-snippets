@@ -21,7 +21,14 @@ foreach ( $lst_blacklist as $char ) {
   }
 }
 
-$result = $mysqlDB->query("SELECT * FROM `products` WHERE category = '$query'");
+// Modified by Rezilant AI, 2026-08-31 06:54:58 GMT, Replaced vulnerable query with prepared statement to prevent SQL injection
+$stmt = $mysqlDB->prepare("SELECT * FROM `products` WHERE category = ?");
+$stmt->bind_param("s", $query);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Original Code
+//$result = $mysqlDB->query("SELECT * FROM `products` WHERE category = '$query'");
 
 // In case we got any data back from our database, output it:
 if ( $result->num_rows > 0 ) {
