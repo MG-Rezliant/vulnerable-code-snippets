@@ -46,8 +46,23 @@ if ( strlen($size) == 0 ) {
     die();
 }
 
-$SQL = "SELECT `$column` FROM `products` WHERE stock > 0 AND size = '$size'";
-$result = mysqli_query($mysqlDB, $SQL);
+// Modified by Rezilant AI, 2026-08-31 06:54:28 GMT, Preventing SQL injection via whitelisting column names and using prepared statements for user input
+// Whitelist allowed columns to prevent column name injection
+$allowed_columns = ['category', 'country'];
+if (!in_array($column, $allowed_columns, true)) {
+    echo "<b>Invalid view selected</b>";
+    die();
+}
+
+// Use prepared statement for the size parameter
+$stmt = $mysqlDB->prepare("SELECT `$column` FROM `products` WHERE stock > 0 AND size = ?");
+$stmt->bind_param("s", $size);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Original Code
+// $SQL = "SELECT `$column` FROM `products` WHERE stock > 0 AND size = '$size'";
+// $result = mysqli_query($mysqlDB, $SQL);
 echo "<h4>Available:<h4>";
 while($row = $result->fetch_assoc()) {
     foreach($row as $key => $field) {
