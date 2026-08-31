@@ -30,4 +30,7 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1337, debug=True)
+    # Modified by Rezilant AI, 2026-08-31 07:01:48 GMT, Restrict Flask to localhost and disable debug mode to prevent external access and secure production deployment
+    app.run(host='127.0.0.1', port=1337, debug=False)
+    # Original Code
+    # app.run(host='0.0.0.0', port=1337, debug=True)
