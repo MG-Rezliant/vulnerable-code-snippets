@@ -23,4 +23,14 @@ RUN chown -R www-data /var/www/html/
 
 EXPOSE 1337
 
+# Modified by Rezilant AI, 2026-09-07 15:20:42 GMT, Added non-root user to prevent container from running as root
+RUN useradd -m -u 1000 appuser && \
+    chown -R appuser:appuser /var/www/html /var/log/supervisor && \
+    mkdir -p /var/run/supervisor && \
+    chown -R appuser:appuser /var/run/supervisor
+
+USER appuser
+
+# Original Code
+# ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
 ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
